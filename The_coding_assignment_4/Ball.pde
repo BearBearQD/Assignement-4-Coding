@@ -13,7 +13,7 @@ class Ball {
     speedY = random(2, 4);  // Random vertical speed
     
     spawnTime = millis();  // Store the spawn time
-    lifetime = int(random(7000, 15000));  // Lifetime between 30-45 seconds
+    lifetime = int(random(15000, 20000));  // Lifetime between 30-45 seconds
   }
   
   // Update the ball's position and handle collisions
@@ -46,11 +46,6 @@ class Ball {
         balls.add(new Ball());  // Create a new ball when this one bounces
       }
     }
-    
-    // Prevent ball from going off the bottom of the screen
-    if (y + radius > height) {
-      reset();  // Reset the ball to its starting position
-    }
   }
   
   // Display the ball
@@ -59,12 +54,9 @@ class Ball {
     ellipse(x, y, radius * 2, radius * 2);  // Draw the ball
   }
   
-  // Reset ball position if it falls off the screen
-  void reset() {
-    x = random(width);  // Random horizontal position
-    y = random(100, 200);  // Random vertical position
-    speedX = random(2, 4);  // Random horizontal speed
-    speedY = random(2, 4);  // Random vertical speed
+  // Check if the ball has passed the paddle and fallen off the screen
+  boolean passedPaddle() {
+    return y - radius > height;  // If the ball's y-coordinate is beyond the bottom of the screen
   }
   
   // Check if the ball should be removed (based on lifetime)
