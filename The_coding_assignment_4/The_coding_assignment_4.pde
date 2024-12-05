@@ -14,13 +14,14 @@ boolean gameOver = false;  // Track if the game is over
 ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();  // List of power-ups
 PowerUp currentPowerUp = null;  // Currently active power-up
 boolean powerUpUsed = false;  // Flag to check if the power-up was used
+//TimeStop
+int stopTimeCounter = 0;  // Counter to track time left in Stop Time effect
 boolean stopTimeActive = false;  // Flag for Stop Time power-up
 int slowBallsTime = 0;  // Time left for slow balls power-up
 int livesBeforeClear = lives;  // Store lives before Clear Balls power-up
 int powerUpTimer = 0;  // Timer to track elapsed time for spawning power-ups
 int powerUpCooldown = 7000;  // Time in milliseconds between power-up spawns (15 seconds)
 String currentAbility = "No ability";  // Track the current ability
-
 //Wall stuff
 ArrayList<Wall> walls = new ArrayList<Wall>();  // List of walls spawned in the game
 ArrayList<Wall> wallsToRemove = new ArrayList<Wall>();
@@ -124,12 +125,18 @@ void draw() {
     powerUpTimer = 0;  // Reset the timer
   }
 
-  // If Stop Time is active, pause ball movement
-  if (stopTimeActive) {
-    stopTimeActive = false;
-    currentAbility = "Stop Time";  // Set the active ability text
+  // If Stop Time is active, change frameRate to 0 to freeze time
+  if(stopTimeCounter > 0)
+  {
+     stopTimeCounter--;
+     if(stopTimeCounter == 0)
+     {
+        for (Ball ball : balls) {
+          ball.speedX /= 0.001;  // Slow down all balls
+          ball.speedY /= 0.001;
+        }
+     }
   }
-
   // Slow down balls for a specific time
   if (slowBallsTime > 0) {
     slowBallsTime--;
@@ -138,7 +145,6 @@ void draw() {
         ball.speedX /= 0.5;  // Restore the ball's normal speed
         ball.speedY /= 0.5;
       }
-      currentAbility = "No ability";  // Reset ability text when the effect ends
     }
   }
 
@@ -170,6 +176,12 @@ void keyPressed() {
     if (currentPowerUp != null && !powerUpUsed) {
       if (currentPowerUp.type.equals("stopTime")) {
         stopTimeActive = true;
+        powerUpUsed = true;
+        for (Ball ball : balls) {
+          ball.speedX *= 0.001;  // Slow down all balls
+          ball.speedY *= 0.001;
+        }
+        stopTimeCounter= 600;  // Set slow balls power-up duration (10 seconds)
         powerUpUsed = true;
         currentAbility = "Stop Time";  // Set the active ability text
       } else if (currentPowerUp.type.equals("spawnWall")) {
