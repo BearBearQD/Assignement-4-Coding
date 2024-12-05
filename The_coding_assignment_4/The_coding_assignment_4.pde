@@ -12,15 +12,17 @@ void setup() {
 void draw() {
   fill(0); // Set fill color to black
   background(255); // Set the background to white
-  // Clear the balls-to-remove list at the start of each frame
-  ballsToRemove.clear();
-  // Update and display each ball
-  for (Ball ball : balls) {
+  // Use a standard for loop with an index
+  for (int i = balls.size() - 1; i >= 0; i--) {
+    Ball ball = balls.get(i);
     ball.update();  // Update ball's position and behavior
     ball.display();  // Display the ball
+    
+    // If the ball meets a condition (e.g., falls off screen), remove it
+    //if (/* condition to remove ball */) {
+      //balls.remove(i);  // Safely remove the ball by index
+    //}
   }
-  // Remove balls marked for removal
-  balls.removeAll(ballsToRemove);
   paddle.update(); // Update the paddle's position
   paddle.display(); // Display the paddle
 }
