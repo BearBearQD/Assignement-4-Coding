@@ -1,6 +1,7 @@
 Paddle paddle; // Declare a Paddle object
 ArrayList<Ball> balls = new ArrayList<Ball>(); // List to hold multiple balls
 ArrayList<Ball> ballsToRemove = new ArrayList<Ball>();  // List of balls to be removed after the update
+int nextBallSpawnTime = 0;  // Next time to spawn a ball
 
 void setup() {
   size(400, 400); // Set canvas size to 400x400 pixels
@@ -12,16 +13,23 @@ void setup() {
 void draw() {
   fill(0); // Set fill color to black
   background(255); // Set the background to white
+  
+  // Spawn a new ball between 7-15 seconds
+  if (millis() > nextBallSpawnTime) {
+    balls.add(new Ball());
+    nextBallSpawnTime = millis() + int(random(7000, 15000));  // Schedule next ball spawn
+  }
+  
   // Use a standard for loop with an index
   for (int i = balls.size() - 1; i >= 0; i--) {
     Ball ball = balls.get(i);
     ball.update();  // Update ball's position and behavior
     ball.display();  // Display the ball
     
-    // If the ball meets a condition (e.g., falls off screen), remove it
-    //if (/* condition to remove ball */) {
-      //balls.remove(i);  // Safely remove the ball by index
-    //}
+    // Despawn (remove) the ball if its lifetime has passed
+    if (ball.shouldDespawn()) {
+      balls.remove(i);  // Safely remove the ball by index
+    }
   }
   paddle.update(); // Update the paddle's position
   paddle.display(); // Display the paddle

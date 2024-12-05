@@ -2,6 +2,8 @@ class Ball {
   float x, y;  // Ball position
   float speedX, speedY;  // Ball speed in both directions
   float radius = 10;  // Ball radius
+  int spawnTime;  // Time when the ball was spawned
+  int lifetime;   // Randomly decided lifetime for the ball (between 30-45 seconds)
   
   // Constructor to initialize ball with random properties
   Ball() {
@@ -9,6 +11,9 @@ class Ball {
     y = random(100, 200);  // Random vertical position
     speedX = random(2, 4);  // Random horizontal speed
     speedY = random(2, 4);  // Random vertical speed
+    
+    spawnTime = millis();  // Store the spawn time
+    lifetime = int(random(500000, 100000));  // Lifetime between 30-45 seconds
   }
   
   // Update the ball's position and handle collisions
@@ -60,5 +65,10 @@ class Ball {
     y = random(100, 200);  // Random vertical position
     speedX = random(2, 4);  // Random horizontal speed
     speedY = random(2, 4);  // Random vertical speed
+  }
+  
+  // Check if the ball should be removed (based on lifetime)
+  boolean shouldDespawn() {
+    return millis() - spawnTime > lifetime;  // Check if lifetime has passed
   }
 }
