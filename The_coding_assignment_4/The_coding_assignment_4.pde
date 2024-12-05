@@ -18,11 +18,12 @@ boolean stopTimeActive = false;  // Flag for Stop Time power-up
 int slowBallsTime = 0;  // Time left for slow balls power-up
 int livesBeforeClear = lives;  // Store lives before Clear Balls power-up
 int powerUpTimer = 0;  // Timer to track elapsed time for spawning power-ups
-int powerUpCooldown = 1000;  // Time in milliseconds between power-up spawns (15 seconds)
+int powerUpCooldown = 7000;  // Time in milliseconds between power-up spawns (15 seconds)
 String currentAbility = "No ability";  // Track the current ability
 
 //Wall stuff
 ArrayList<Wall> walls = new ArrayList<Wall>();  // List of walls spawned in the game
+ArrayList<Wall> wallsToRemove = new ArrayList<Wall>();
 
 void setup() {
   size(400, 400); // Set canvas size to 400x400 pixels
@@ -80,16 +81,25 @@ void draw() {
   }
   paddle.update(); // Update the paddle's position
   paddle.display(); // Display the paddle
-  
+
   // Display the walls spawned by the wall power-up
   for (Wall w : walls) {
     w.display();  // Draw each wall
+        if (w.shouldDespawn()) {
+      wallsToRemove.add(w);  // Add wall to removal list if its lifespan is over
+    }
   }
+  
+  // Remove walls that should despawn
+  for (Wall w : wallsToRemove) {
+    walls.remove(w);  // Remove the wall from the walls list
+  }
+  wallsToRemove.clear();  // Clear the removal list
 
   // Handle the power-up if it exists
   if (currentPowerUp != null) {
     currentPowerUp.update();
-    currentPowerUp.display();
+    //currentPowerUp.display();
 
     // Check if the power-up has been collected
     if (currentPowerUp.collected) {
@@ -131,11 +141,24 @@ void draw() {
       currentAbility = "No ability";  // Reset ability text when the effect ends
     }
   }
-  
+
   // Display the current ability text on screen
   fill(0);
   textSize(16);
-  text("Current Ability: " + currentAbility, 10, 30);  // Display at top-left corner
+  if (currentPowerUp != null && !powerUpUsed) {
+    if (currentPowerUp.type.equals("stopTime")) {
+      currentAbility = "Stop Time";  // Set the active ability text
+    } else if (currentPowerUp.type.equals("spawnWall")) {
+      currentAbility = "Spawn Wall";  // Set the active ability text
+    } else if (currentPowerUp.type.equals("slowBalls")) {
+      currentAbility = "Slow Balls";  // Set the active ability text
+    } else if (currentPowerUp.type.equals("plusLife")) {
+      currentAbility = "Plus 1 Life";  // Set the active ability text
+    } else if (currentPowerUp.type.equals("clearBalls")) {
+      currentAbility = "Clear Balls";  // Set the active ability text
+    }
+    text("Current Ability: " + currentAbility, 10, 30);  // Display at top-left corner
+  }
 }
 
 void keyPressed() {

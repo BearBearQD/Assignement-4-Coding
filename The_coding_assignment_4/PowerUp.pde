@@ -7,7 +7,6 @@ class PowerUp {
   // Constructor for the PowerUp
   PowerUp() {
     // Randomly assign a type to the power-up
-    String[] types = {"stopTime", "spawnWall", "slowBalls", "plusLife", "clearBalls"};
     x = random(width);  // Random horizontal position
     y = 0;  // Start at the top of the screen
     type = randomPowerUp();  // Randomly assign a power-up type
