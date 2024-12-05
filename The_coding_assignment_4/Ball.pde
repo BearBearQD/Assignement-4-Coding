@@ -7,13 +7,13 @@ class Ball {
   
   // Constructor to initialize ball with random properties
   Ball() {
-    x = random(width);  // Random horizontal position
+    x = random(20,380);  // Random horizontal position
     y = random(100, 200);  // Random vertical position
     speedX = random(2, 4);  // Random horizontal speed
     speedY = random(2, 4);  // Random vertical speed
     
     spawnTime = millis();  // Store the spawn time
-    lifetime = int(random(500000, 100000));  // Lifetime between 30-45 seconds
+    lifetime = int(random(7000, 15000));  // Lifetime between 30-45 seconds
   }
   
   // Update the ball's position and handle collisions
