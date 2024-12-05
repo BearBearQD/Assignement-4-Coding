@@ -35,7 +35,7 @@ void draw() {
   // Spawn a new ball between 7-15 seconds
   if (millis() > nextBallSpawnTime) {
     balls.add(new Ball());
-    nextBallSpawnTime = millis() + int(random(7000, 15000));  // Schedule next ball spawn
+    nextBallSpawnTime = millis() + int(random(5000, 10000));  // Schedule next ball spawn
   }
   
   // Use a standard for loop with an index
@@ -75,5 +75,5 @@ void resetGame() {
   lives = 10;  // Reset lives to 10
   gameOver = false;  // Reset gameOver flag
   balls.clear();  // Clear all existing balls
-  nextBallSpawnTime = millis() + int(random(7000, 15000));  // Schedule next ball spawn
+  nextBallSpawnTime = millis() + int(random(1000, 3000));  // Schedule next ball spawn
 }

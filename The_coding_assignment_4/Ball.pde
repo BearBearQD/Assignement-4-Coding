@@ -21,8 +21,18 @@ class Ball {
     String[] abilities = {"split", "small", "gravity", "speed", "slow"};
     ability = abilities[int(random(abilities.length))];
     
-    // Set a random color for the ball
-    colour = color(random(255), random(255), random(255));
+    // Assign colors based on the ability
+    if (ability.equals("split")) {
+      colour = color(255, 0, 0);  // Red for split
+    } else if (ability.equals("small")) {
+      colour = color(0, 0, 255);  // Blue for small
+    } else if (ability.equals("gravity")) {
+      colour = color(0, 255, 0);  // Green for gravity
+    } else if (ability.equals("speed")) {
+      colour = color(255, 255, 0);  // Yellow for speed
+    } else if (ability.equals("slow")) {
+      colour = color(128, 0, 128);  // Purple for slow
+    }
   }
   
   // Update the ball's position and handle collisions
@@ -68,25 +78,28 @@ class Ball {
         hasSplit = true;  // Mark as split
       }
       
-      // Decrease lives by 2 for "slow" ball
-      if (ability.equals("slow")) {
-        lives -= 2;
-        if (lives <= 0) {
-          gameOver = true;  // End game if lives go to 0
+      // Check if the ball has passed the paddle and fallen off the screen
+      if (y - radius > height) {
+        if (ability.equals("slow")) {
+          lives -= 2;  // Decrease 2 lives when the "slow" ball passes the paddle
+          if (lives <= 0) {
+            gameOver = true;  // End game if lives go to 0
+          }
         }
+        balls.remove(this);  // Remove the ball from the game when it falls off screen
       }
     }
   }
   
   // Display the ball
   void display() {
-    fill(255, 0, 0);  // Set the ball color to red
+    fill(colour);  // Set the ball's color based on its ability
     ellipse(x, y, radius * 2, radius * 2);  // Draw the ball
   }
   
   // Check if the ball has passed the paddle and fallen off the screen
   boolean passedPaddle() {
-    return y - radius > height;  // If the ball's y-coordinate is beyond the bottom of the screen
+    return y - radius > 415;  // If the ball's y-coordinate is beyond the bottom of the screen
   }
   
   // Check if the ball should be removed (based on lifetime)
