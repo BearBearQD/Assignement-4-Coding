@@ -27,22 +27,4 @@ class PowerUp {
       collected = true;  // Mark it as collected
     }
   }
-
-  // Display the power-up
-  void display() {
-    if (!collected) {
-      if (type.equals("stopTime")) {
-        fill(255, 0, 255);  // Magenta for Stop Time
-      } else if (type.equals("spawnWall")) {
-        fill(0, 255, 255);  // Cyan for Spawn Wall
-      } else if (type.equals("slowBalls")) {
-        fill(0, 255, 0);  // Green for Slow Balls
-      } else if (type.equals("plusLife")) {
-        fill(255, 255, 0);  // Yellow for Plus 1 Life
-      } else if (type.equals("clearBalls")) {
-        fill(255, 165, 0);  // Orange for Clear All Balls
-      }
-      ellipse(x, y, radius * 2, radius * 2);  // Draw the power-up
-    }
-  }
 }

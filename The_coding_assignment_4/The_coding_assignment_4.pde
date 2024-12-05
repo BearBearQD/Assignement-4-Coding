@@ -9,19 +9,21 @@ int nextBallSpawnTime = 0;  // Next time to spawn a ball
 //Score Stuff
 int lives = 10;  // Start with 10 lives
 boolean gameOver = false;  // Track if the game is over
+int livesBeforeClear = lives;  // Store lives before Clear Balls power-up
 
-//Power Ups
+//Powerup variables
+int powerUpTimer = 0;  // Timer to track elapsed time for spawning power-ups
+int powerUpCooldown = 7000;  // Time in milliseconds between power-up spawns (15 seconds)
+String currentAbility = "No ability";  // Track the current ability
 ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();  // List of power-ups
 PowerUp currentPowerUp = null;  // Currently active power-up
 boolean powerUpUsed = false;  // Flag to check if the power-up was used
+
 //TimeStop
 int stopTimeCounter = 0;  // Counter to track time left in Stop Time effect
 boolean stopTimeActive = false;  // Flag for Stop Time power-up
 int slowBallsTime = 0;  // Time left for slow balls power-up
-int livesBeforeClear = lives;  // Store lives before Clear Balls power-up
-int powerUpTimer = 0;  // Timer to track elapsed time for spawning power-ups
-int powerUpCooldown = 7000;  // Time in milliseconds between power-up spawns (15 seconds)
-String currentAbility = "No ability";  // Track the current ability
+
 //Wall stuff
 ArrayList<Wall> walls = new ArrayList<Wall>();  // List of walls spawned in the game
 ArrayList<Wall> wallsToRemove = new ArrayList<Wall>();
@@ -31,6 +33,8 @@ void setup() {
   // Add a few balls with random speeds and positions
   balls.add(new Ball());
   paddle = new Paddle(); // Create the Paddle object
+  println("press Space to use Abilities");
+  println("try to survive the longest you can");
 }
 
 void draw() {
