@@ -1,23 +1,22 @@
 class Paddle {
-  float x, y; // Paddle position
-  float w = 100, h = 20; // Paddle width and height
+  PVector position;  // Paddle position as a PVector
+  PVector size;      // Paddle size (width and height) as a PVector
   
   // Constructor to set the initial position of the paddle
   Paddle() {
-    y = height - h; // Set the vertical position to the bottom of the screen
+    position = new PVector(width / 2, height - 30);  // Set initial position
+    size = new PVector(100, 20);  // Set paddle width and height
   }
   
   // Update the paddle's horizontal position to follow the mouse
   void update() {
-    x = mouseX - w / 2; // Paddle follows mouseX horizontally
-    
-    // Constrain the paddle to stay within the screen's horizontal boundaries
-    x = constrain(x, 0, width - w); // Prevent the paddle from going off-screen
+   // Get the mouse's x position and move the paddle accordingly
+    position.x = constrain(mouseX - size.x / 2, 0, width - size.x);  // Make sure paddle stays within screen bounds
   }
   
   // Display the paddle
   void display() {
     fill(0); // Set the color to black
-    rect(x, y, w, h); // Draw the paddle
+    rect(position.x, position.y, size.x, size.y);  // Draw the paddle at the current position
   }
 }

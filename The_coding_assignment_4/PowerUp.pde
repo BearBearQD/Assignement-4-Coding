@@ -23,7 +23,7 @@ class PowerUp {
     y += 2;  // Fall down with speed 2
 
     // Check if the power-up has been collected by the paddle
-    if (dist(x, y, paddle.x + paddle.w / 2, paddle.y) < radius + paddle.h / 2) {
+    if (dist(x, y, paddle.position.x + paddle.size.x / 2, paddle.position.y) < radius + paddle.size.y / 2) {
       collected = true;  // Mark it as collected
     }
   }

@@ -136,8 +136,8 @@ void draw() {
      if(stopTimeCounter == 0)
      {
         for (Ball ball : balls) {
-          ball.speedX /= 0.001;  // Slow down all balls
-          ball.speedY /= 0.001;
+          ball.velocity.x /= 0.001;  // Slow down all balls
+          ball.velocity.y /= 0.001;
         }
      }
   }
@@ -146,8 +146,8 @@ void draw() {
     slowBallsTime--;
     if (slowBallsTime == 0) {
       for (Ball ball : balls) {
-        ball.speedX /= 0.5;  // Restore the ball's normal speed
-        ball.speedY /= 0.5;
+        ball.velocity.x /= 0.5;  // Restore the ball's normal speed
+        ball.velocity.y /= 0.5;
       }
     }
   }
@@ -182,8 +182,8 @@ void keyPressed() {
         stopTimeActive = true;
         powerUpUsed = true;
         for (Ball ball : balls) {
-          ball.speedX *= 0.001;  // Slow down all balls
-          ball.speedY *= 0.001;
+          ball.velocity.x *= 0.001;  // Slow down all balls
+          ball.velocity.y *= 0.001;
         }
         stopTimeCounter= 600;  // Set slow balls power-up duration (10 seconds)
         powerUpUsed = true;
@@ -195,8 +195,8 @@ void keyPressed() {
         currentAbility = "Spawn Wall";  // Set the active ability text
       } else if (currentPowerUp.type.equals("slowBalls")) {
         for (Ball ball : balls) {
-          ball.speedX *= 0.5;  // Slow down all balls
-          ball.speedY *= 0.5;
+          ball.velocity.x *= 0.5;  // Slow down all balls
+          ball.velocity.y*= 0.5;
         }
         slowBallsTime = 600;  // Set slow balls power-up duration (10 seconds)
         powerUpUsed = true;
